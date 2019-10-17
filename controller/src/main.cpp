@@ -4,9 +4,15 @@
 #define PIN_THERMISTOR 0
 #define THERMISTOR_UPDATE_FREQUENZ 1500
 
+float readThermistor();
+
 String text;
 long lastUpdate = 0;
 AnalogDisplay display(11,9,12,1,2,3,4);
+
+void setup() {
+  
+}
 
 void loop() {
 
