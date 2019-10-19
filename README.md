@@ -35,6 +35,9 @@ Here's a little hint for the ESP8266 pins assignment:
 
 <img src="https://components101.com/sites/default/files/component_pin/ESP8266-Pinout.png" alt="alt text" width="250" height="150">
 
+Connect RX und TX with the Controller Boards (Arduino) RX and TX pins.
+Connect Connect Controller Boards (Arduino) RESET pin to GND pin. This will setup the board as serial bridge.
+
 
 Follow this steps to boot into progamming mode:
 1. press and hold the reset button
