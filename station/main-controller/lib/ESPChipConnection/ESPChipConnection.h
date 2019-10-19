@@ -11,6 +11,7 @@ class ESPChipConnection {
         int PIN_TX;
 
         void waitForSerialCommand();
+        void sendATCommand(String cmd);
 
     public:
         ESPChipConnection(int pinRx, int pinTx);

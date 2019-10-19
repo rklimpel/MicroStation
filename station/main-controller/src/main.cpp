@@ -18,7 +18,11 @@ long lastWifiUpdate = 0;
 AnalogDisplay analogDisplay(11,9,12,5,2,3,4);
 ESPChipConnection espChipConnection(7,8);
 
-void setup() {}
+void setup() {
+  Serial.begin(9600);
+  Serial.println("setup()");
+  espChipConnection.connectToWifiNetwork("Fritz!Box 7362 SL","96716995986792895394");
+}
 
 void loop() {
 
