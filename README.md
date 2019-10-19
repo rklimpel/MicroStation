@@ -20,5 +20,7 @@ requirements:
 - Visual Studio Code with installed 'platformio-ide' Extension
 
 steps:
-- open project root folder is visual studio code
-- platformio should index the project so you can build and upload via statusbar icons
+- open `wifi-controller` root folder in visual studio code
+- platformio should index the project so you can build and `upload to esp8266 chip` via statusbar icons
+- open `main-controller` root folder in visual studio code 
+- platformio should index the project so you can build and `upload to main controller board (arduino)` via statusbar icons
