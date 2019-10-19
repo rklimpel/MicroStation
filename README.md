@@ -24,3 +24,7 @@ steps:
 - platformio should index the project so you can build and `upload to esp8266 chip` via statusbar icons
 - open `main-controller` root folder in visual studio code 
 - platformio should index the project so you can build and `upload to main controller board (arduino)` via statusbar icons
+
+## How to upload to ESP8266 Wifi Chip?
+
+`TODO`
