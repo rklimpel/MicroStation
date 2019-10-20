@@ -3,7 +3,7 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
-
+#define SERIAL_BOUND_RATE 9600
 
 NetworkController::NetworkController(int pinRx, int pinTx, String ssid, String pw){
     PIN_RX = pinRx;
@@ -27,7 +27,7 @@ void NetworkController::testConnection(){
 void NetworkController::sendSerialMessage(String msg){
     Serial.println("send Command to esp8266...");
     SoftwareSerial wifiSerial(PIN_RX,PIN_TX);
-    wifiSerial.begin(115200);
+    wifiSerial.begin(SERIAL_BOUND_RATE);
     wifiSerial.println(msg);
     delay(1000);
     String response = "reponse: ";

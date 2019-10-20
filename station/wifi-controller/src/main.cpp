@@ -1,6 +1,8 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 
+#define SERIAL_BOUND_RATE 9600
+
 void establishConnection(String ssid,String pw);
 void executeCommand(String cmd);
 String getArgument(String argId,String cmd);
@@ -11,7 +13,7 @@ const char* ssid = "FRITZ!Box 7362 SL";
 const char* password = "96716995986792895394";
  
 void setup () {
-  Serial.begin(115200);
+  Serial.begin(SERIAL_BOUND_RATE);
   establishConnection(ssid,password);
 }
  
