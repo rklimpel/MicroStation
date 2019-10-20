@@ -2,9 +2,9 @@
 
 ### General Command Scheme:
 
-1. Command start and end with a '$' symbol
-2. First string after the starting '$' symbol is the command itself
-3. Arguments will be added in the following style: &ARG_NAME=argdata
+1. Command start and end with a '§' symbol
+2. First string after the starting '§' symbol is the command itself
+3. Arguments will be added in the following style: %ARG_NAME=argdata
 
 ---
 
@@ -15,7 +15,7 @@
 `ARGs:` SSID, PW
 
 Sample:
-`$CONNECT&SSID=MyWlanSSID&PW=MyWiFiPassword$`
+`§CONNECT%SSID=MyWlanSSID%PW=MyWiFiPassword§`
 
 #### Send GET Request
 
@@ -24,7 +24,7 @@ Sample:
 `ARGs:` URL
 
 Sample:
-`$HTTP-GET&SURL=http://localhost:5000/?name=Heino$`
+`§HTTP-GET%SURL=http://localhost:5000/?name=Heino§`
 
 #### Send POST Request
 
@@ -34,4 +34,4 @@ Sample:
 
 
 Sample:
-`$HTTP-POST&SURL=http://localhost:5000/someMorePath&BODY=requestBodyStuff$`
+`§HTTP-POST%SURL=http://localhost:5000/someMorePath%BODY=requestBodyStuff§`
