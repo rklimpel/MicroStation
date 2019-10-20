@@ -6,7 +6,7 @@
 #define THERMISTOR_UPDATE_FREQUENZ 1500
 #define WIFI_UPDATE_FREQUENZ 10000
 
-#define WIFI_SSID "FRITZ!Box 7362 S"
+#define WIFI_SSID "FRITZ!Box 7362 SL"
 #define WIFI_PW "96716995986792895394"
 
 float readThermistor();
@@ -19,9 +19,10 @@ long lastUpdate = 0;
 long lastWifiUpdate = 0;
 
 AnalogDisplay analogDisplay(11,9,12,5,2,3,4);
-NetworkController networkController(10,8,WIFI_SSID,WIFI_PW);
+NetworkController networkController(6,7,WIFI_SSID,WIFI_PW);
 
 void setup() {
+  networkController.establishConnection(WIFI_SSID,WIFI_PW);
   Serial.begin(115200);
   Serial.println("setup done.");
 }
@@ -30,6 +31,7 @@ void loop() {
 
   if(millis()-lastUpdate>THERMISTOR_UPDATE_FREQUENZ){
     text = (String)readThermistor();
+    networkController.uploadTemperature(text+"°C");
     lastUpdate = millis();
   }
 

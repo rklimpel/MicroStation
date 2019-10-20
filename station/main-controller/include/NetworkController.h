@@ -17,6 +17,7 @@ class NetworkController {
     public:
         NetworkController(int pinRx, int pinTx, String ssid, String pw);
         void establishConnection(String ssid, String pw);
+        void uploadTemperature(String temp);
         void testConnection();
 };
 

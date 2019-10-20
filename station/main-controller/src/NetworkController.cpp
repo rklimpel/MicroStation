@@ -24,6 +24,11 @@ void NetworkController::testConnection(){
     sendSerialMessage(msg);
 }
 
+void NetworkController::uploadTemperature(String temp){
+    String msg = "§HTTP-GET%URL=http://192.168.178.195:5000/api/temperature?value=" + temp + "§";
+    sendSerialMessage(msg);
+}
+
 void NetworkController::sendSerialMessage(String msg){
     Serial.println("send Command to esp8266...");
     SoftwareSerial wifiSerial(PIN_RX,PIN_TX);
