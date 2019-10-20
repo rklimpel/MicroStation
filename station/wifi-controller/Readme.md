@@ -11,14 +11,20 @@ Sample:
 
 ---
 
-#### Test Request
-
-`CMD:` TEST
-
-`ARGs:` NAME
-
 #### Wifi Verbindung herstellen
 
 `CMD:` CONNECT
 
 `ARGs:` SSID, PW
+
+#### Send GET Request
+
+`CMD:` GET-REQUEST
+
+`ARGs:` URL
+
+#### Send POST Request
+
+`CMD:` POST-REQUEST
+
+`ARGs:` URL,BODY
