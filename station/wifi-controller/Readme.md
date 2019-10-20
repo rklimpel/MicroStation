@@ -6,9 +6,6 @@
 2. First string after the starting '$' symbol is the command itself
 3. Arguments will be added in the following style: &ARG_NAME=argdata
 
-Sample:
-`$CONNECT&SSID=MyWlanSSID&PW=MyWiFiPassword$`
-
 ---
 
 #### Wifi Verbindung herstellen
@@ -17,14 +14,24 @@ Sample:
 
 `ARGs:` SSID, PW
 
+Sample:
+`$CONNECT&SSID=MyWlanSSID&PW=MyWiFiPassword$`
+
 #### Send GET Request
 
 `CMD:` GET-REQUEST
 
 `ARGs:` URL
 
+Sample:
+`$HTTP-GET&SURL=http://localhost:5000/?name=Heino$`
+
 #### Send POST Request
 
 `CMD:` POST-REQUEST
 
-`ARGs:` URL,BODY
+`ARGs:` URL, BODY
+
+
+Sample:
+`$HTTP-POST&SURL=http://localhost:5000/someMorePath&BODY=requestBodyStuff$`
