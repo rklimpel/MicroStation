@@ -20,7 +20,7 @@ void NetworkController::establishConnection(String ssid, String pw){
 }
 
 void NetworkController::testConnection(){
-    String msg = "$TEST";
+    String msg = "§HTTP-GET%URL=http://192.168.178.195:5000/?name=Udo§";
     sendSerialMessage(msg);
 }
 
@@ -28,10 +28,14 @@ void NetworkController::sendSerialMessage(String msg){
     Serial.println("send Command to esp8266...");
     SoftwareSerial wifiSerial(PIN_RX,PIN_TX);
     wifiSerial.begin(115200);
-    wifiSerial.println("$TEST");
+    wifiSerial.println(msg);
     delay(1000);
+    String response = "reponse: ";
     while (wifiSerial.available()){
-        Serial.println(wifiSerial.readString());
+        response += wifiSerial.readString();
+        delay(500);
     }
+    Serial.println(response);
+    
 }
 
