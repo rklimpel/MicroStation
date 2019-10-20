@@ -13,10 +13,10 @@ class NetworkController {
         String pw;
 
         void sendSerialMessage(String msg);
-        void establishConnection(String ssid, String pw);
 
     public:
         NetworkController(int pinRx, int pinTx, String ssid, String pw);
+        void establishConnection(String ssid, String pw);
         void testConnection();
 };
 
