@@ -24,3 +24,6 @@ def log_temperature():
 @app.route('/fuckgivemethisshit',methods=['GET'])
 def get_temperature():
         return "<meta http-equiv=\"refresh\" content=\"5\">"+lastTemperature
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')
