@@ -11,8 +11,7 @@ docker build -t microstation-server:latest .
 ```
 
 
-run docker image (you may want to stop old instance before starting):
+run docker image with the provided shell script:
 ```sh
-docker stop microstation-server
-docker run -d -p 5000:5000 microstation-server --name microstation-server
+./run-server.sh
 ```
