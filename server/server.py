@@ -29,7 +29,7 @@ def log_temperature():
     if not os.path.exists('./databases/'):
         os.makedirs('./databases/')
 
-    db = TinyDB(f'./databases/station_{stationId}.json', indent=4)
+    db = TinyDB('./databases/station_{stationId}.json', indent=4)
     db.insert({'timestamp': timestamp, 'temperature_value': temperatureValue})
     db.close()
 
