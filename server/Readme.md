@@ -2,27 +2,16 @@
 
 ### How to run Server?
 
-start server for local usage with:
-```bash
-> export FLASK_APP=server.py
-> flask run
-```
+Always remember: There is a better option - running the server in docker.
 
-start server for external usage with:
+start server with:
 ```bash
-> export FLASK_APP=server.py
-> flask run --host=0.0.0.0
+> python3 server.py
 ```
 
 ### How to run Server with docker?
 
 **Installation of docker is requiered (https://docs.docker.com/install/).**
-
-
-build docker image:
-```sh
-docker build -t microstation-server:latest .
-```
 
 
 run docker image with the provided shell script:
