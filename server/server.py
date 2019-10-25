@@ -1,15 +1,17 @@
-from flask import Flask,escape,request
+from flask import Flask,escape,request, render_template
+
 app = Flask(__name__)
 
-lastTemperature="Rudolf"
+lastTemperature="-1.0"
 
 @app.route('/')
-def hello_microstation():
+@app.route('/index')
+def index():
     name = request.args.get("name","")
+    title = "Microstation Server"
     if(name is ""):
-        return "hello unkown microstation user."
-    else:
-        return 'hello, ' + name + '. \nwelcome at microstation server.'
+        name = "Unkown User"
+    return render_template('index.html', title=title, name=name)
     
 @app.route('/api/temperature',methods=['POST','GET'])
 def log_temperature():
