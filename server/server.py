@@ -1,4 +1,6 @@
+import os
 from flask import Flask,escape,request, render_template
+from tinydb import TinyDB, Query
 
 app = Flask(__name__)
 
@@ -13,19 +15,29 @@ def index():
         name = "Unkown User"
     return render_template('index.html', title=title, name=name)
     
-@app.route('/api/temperature',methods=['POST','GET'])
+@app.route('/api/v1/temperature',methods=['POST'])
 def log_temperature():
-    value = request.args.get("value","")
-    if(value is ""):
-        return "ERROR"
-    else:
-        global lastTemperature
-        lastTemperature = value
-        return lastTemperature
+
+    if not request.is_json:
+        return 'ERROR'
+
+    body = request.get_json()
+    temperatureValue = body['temperature_value']
+    timestamp = body['timestamp']
+    stationId = body['station_id']
+
+    if not os.path.exists('./databases/'):
+        os.makedirs('./databases/')
+
+    db = TinyDB(f'./databases/station_{stationId}.json', indent=4)
+    db.insert({'timestamp': timestamp, 'temperature_value': temperatureValue})
+    db.close()
+
+    return "Data saved."
 
 @app.route('/fuckgivemethisshit',methods=['GET'])
 def get_temperature():
         return "<meta http-equiv=\"refresh\" content=\"5\">"+lastTemperature
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=False, host='0.0.0.0')
