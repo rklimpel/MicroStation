@@ -37,9 +37,11 @@ def log_temperature():
 
     return "Data saved."
 
-@app.route('/fuckgivemethisshit',methods=['GET'])
+@app.route('/viewdata',methods=['GET'])
 def get_temperature():
-        return "<meta http-equiv=\"refresh\" content=\"5\">"+lastTemperature
+    db = TinyDB('./appdata/station_0.json', indent=4)
+    data = db.all()
+    return render_template('listview.html', data=data)
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0')
