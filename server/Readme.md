@@ -16,8 +16,19 @@ start server with:
 
 run server with docker compose:
 ```sh
-> docker-compose up
+> docker-compose up -d
 ```
+
+stop server with docker compose:
+```sh
+> docker-compose down
+```
+
+run server in foreground with output:
+```sh
+> docker-compse up
+
+
 
 ### How to deploy server to raspberry?
 
