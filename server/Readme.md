@@ -57,8 +57,7 @@ clone this git repo to your pi, build docker image and run server with script:
 ```sh
 git clone https://github.com/rklimpel/MicroStation.git
 cd MicroStation/server
-docker build -t microstation-server:latest .
-./run-server.sh
+docker-compose up -d
 ```
 
 server should be available now on pi's ip and port 5000
