@@ -14,9 +14,9 @@ start server with:
 **Installation of docker is requiered (https://docs.docker.com/install/).**
 
 
-run docker image with the provided shell script:
+run server with docker compose:
 ```sh
-./run-server.sh
+> docker-compose up
 ```
 
 ### How to deploy server to raspberry?
