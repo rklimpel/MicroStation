@@ -14,10 +14,21 @@ start server with:
 **Installation of docker is requiered (https://docs.docker.com/install/).**
 
 
-run docker image with the provided shell script:
+run server with docker compose:
 ```sh
-./run-server.sh
+> docker-compose up -d
 ```
+
+stop server with docker compose:
+```sh
+> docker-compose down
+```
+
+run server in foreground with output:
+```sh
+> docker-compse up
+```
+
 
 ### How to deploy server to raspberry?
 
@@ -46,8 +57,7 @@ clone this git repo to your pi, build docker image and run server with script:
 ```sh
 git clone https://github.com/rklimpel/MicroStation.git
 cd MicroStation/server
-docker build -t microstation-server:latest .
-./run-server.sh
+docker-compose up -d
 ```
 
 server should be available now on pi's ip and port 5000
