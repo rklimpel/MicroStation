@@ -27,7 +27,7 @@ stop server with docker compose:
 run server in foreground with output:
 ```sh
 > docker-compse up
-
+```
 
 
 ### How to deploy server to raspberry?
