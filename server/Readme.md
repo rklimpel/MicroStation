@@ -16,17 +16,22 @@ start server with:
 
 run server with docker compose:
 ```sh
-> docker-compose up -d
+docker-compose up -d
+```
+
+restarting running server:
+```sh
+docker compose restart
 ```
 
 stop server with docker compose:
 ```sh
-> docker-compose down
+docker-compose down
 ```
 
 run server in foreground with output:
 ```sh
-> docker-compse up
+docker-compse up
 ```
 
 
