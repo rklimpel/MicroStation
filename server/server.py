@@ -31,6 +31,8 @@ def log_temperature():
 
     db = TinyDB('./appdata/station_'+str(stationId)+'.json', indent=4)
     db.insert({'timestamp': timestamp, 'temperature_value': temperatureValue})
+    print("Saved Temperature to database:\ntemperature_value: '" + str(temperatureValue)+"'\ntimestamp: '"+str(timestamp)+"'")
+
     db.close()
 
     return "Data saved."
