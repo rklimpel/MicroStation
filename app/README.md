@@ -6,9 +6,6 @@ the app will be written with the flutter framework and can be deployed to ios an
 
 to open the project simply install android studio 3.0 or later, because of it's build in flutter support.
 
-A few information about the Flutter Framework can be found here:
+A few information about the Flutter Framework can be found here: https://flutter.dev/docs
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-- [online documentation](https://flutter.dev/docs)
-
+ 
