@@ -14,33 +14,11 @@ def index():
     if(name is ""):
         name = "Unkown User"
     return render_template('index.html', title=title, name=name)
-    
-@app.route('/api/v1/temperature',methods=['POST'])
-def log_temperature():
-
-    if not request.is_json:
-        return 'ERROR'
-
-    body = request.get_json()
-    temperatureValue = body['temperature_value']
-    timestamp = body['timestamp']
-    stationId = body['station_id']
-
-    if not os.path.exists('./appdata/'):
-        os.makedirs('./appdata/')
-
-    db = TinyDB('./appdata/station_'+str(stationId)+'.json', indent=4)
-    db.insert({'timestamp': timestamp, 'temperature_value': temperatureValue})
-    print("Saved Temperature to database:\ntemperature_value: '" + str(temperatureValue)+"'\ntimestamp: '"+str(timestamp)+"'")
-
-    db.close()
-
-    return "Data saved."
 
 @app.route('/viewdata',methods=['GET'])
-def get_temperature():
+def view_temperature():
     db = TinyDB('./appdata/station_0.json', indent=4)
-    data = db.all()
+    data = db.table('temperature').all()
     return render_template('listview.html', data=data)
 
 # ------------------------------------------------------
@@ -48,6 +26,39 @@ def get_temperature():
 @app.route('/api/v1.0/temperatures',methods=['POST'])
 def post_temperature():
     print("uploading temperature...")
+
+    print(request)
+
+    if not request.is_json:
+        return 'ERROR'
+
+    body = request.get_json()
+    print("this worked!")
+
+    print("body:\n\n" + json.dumps(body) + "\n\n")
+
+    value = body['value']
+    unit = body['unit']
+    timestamp = body['timestamp']
+    station_id = body['station_id']
+    sensor = body['sensor']
+
+    if not os.path.exists('./appdata/'):
+        os.makedirs('./appdata/')
+
+    db = TinyDB('./appdata/station_'+str(station_id)+'.json', indent=4)
+    table = db.table('temperature')
+    table.insert({
+        'timestamp': timestamp, 
+        'value': value,
+        'unit': unit,
+        'sensor': sensor
+        })
+
+    print("Saved Temperature to database.")
+
+    db.close()
+
     return "OK"
 
 @app.route('/api/v1.0/temperatures',methods=['GET'])

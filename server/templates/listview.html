@@ -1,11 +1,15 @@
 <html>
     <head>
-            <meta http-equiv="refresh" content="5">
+            <meta http-equiv="refresh" content="10">
     </head>
     <body>
         <h1>Hi!</h1>
         {% for entry in data %}
-        <div>time: {{ entry.timestamp }} --- temperature: {{ entry.temperature_value }}</div>
+        <hr>
+        <div>time  : {{ entry.timestamp }} </div>
+        <div>value : {{ entry.value }}</div>
+        <div>unit  : {{ entry.unit }}</div>
+        <div>sensor: {{ entry.sensor }}</div>
         {% endfor %}
     </body>
 </html>
