@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "station/wifi-controller"
+		},
+		{
+			"path": "station/main-controller"
+		},
+		{
+			"path": "server"
+		}
+	],
+	"settings": {}
+}
