@@ -6,6 +6,7 @@ RUN apt-get install -y python3
 
 RUN pip3 install flask
 RUN pip3 install tinydb
+RUN pip3 install json
 
 WORKDIR /server
 
