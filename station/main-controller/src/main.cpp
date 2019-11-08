@@ -6,8 +6,8 @@
 #define THERMISTOR_UPDATE_FREQUENZ 1500
 #define WIFI_UPDATE_FREQUENZ 10000
 
-#define WIFI_SSID "FRITZ!Box 7362 SL"
-#define WIFI_PW "96716995986792895394"
+#define WIFI_SSID "Zum Einhornland"
+#define WIFI_PW "Butterbreadcoffee23"
 
 float readThermistor();
 void doStuff();

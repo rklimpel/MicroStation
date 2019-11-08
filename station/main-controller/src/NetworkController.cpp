@@ -20,7 +20,7 @@ void NetworkController::establishConnection(String ssid, String pw){
 }
 
 void NetworkController::testConnection(){
-    String msg = "§HTTP-GET%URL=http://192.168.178.195:5000/?name=Udo§";
+    String msg = "§HTTP-GET%URL=http://rklimpel.hopto.org:5000§";
     sendSerialMessage(msg);
 }
 
