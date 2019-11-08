@@ -15,10 +15,10 @@ def index():
         name = "Unkown User"
     return render_template('index.html', title=title, name=name)
 
-@app.route('/viewdata',methods=['GET'])
-def view_temperature():
-    db = TinyDB('./appdata/station_0.json', indent=4)
-    data = db.table('temperature').all()
+@app.route('/rawdata/<table>/<station_id>',methods=['GET'])
+def view_temperature(station_id,table):
+    db = TinyDB('./appdata/station_' + str(station_id) + '.json', indent=4)
+    data = db.table(table).all()
     return render_template('listview.html', data=data)
 
 # ------------------------------------------------------
