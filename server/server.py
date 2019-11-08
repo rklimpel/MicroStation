@@ -6,6 +6,8 @@ from tinydb import TinyDB, Query
 
 app = Flask(__name__)
 
+# --------------------- Webpages ----------------------------
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -21,7 +23,24 @@ def view_temperature(station_id,table):
     data = db.table(table).all()
     return render_template('listview.html', data=data)
 
-# ------------------------------------------------------
+# ------------------------ API -------------------------------
+
+
+@app.route('/api/v1.0/status',methods=['GET'])
+def get_status():
+    print("get server status...")
+
+    status = {
+        "status": "OK",
+        "timestamp": int(time.time()),
+        "api_links": {
+            "humidities": request.host_url + "api/v1.0/humidities",
+            "temperatures": request.host_url + "api/v1.0/temperatures",
+            "stations": request.host_url + "api/v1.0/stations"
+        }
+    }
+
+    return json.dumps(status)
 
 @app.route('/api/v1.0/temperatures',methods=['POST'])
 def post_temperature():
@@ -33,9 +52,6 @@ def post_temperature():
         return 'ERROR'
 
     body = request.get_json()
-    print("this worked!")
-
-    print("body:\n\n" + json.dumps(body) + "\n\n")
 
     value = body['value']
     unit = body['unit']
@@ -94,25 +110,19 @@ def get_all_stations():
 @app.route('/api/v1.0/stations/register',methods=['POST'])
 def register_station():
     print("register new station...")
+
+    print(request)
+
+    if not request.is_json:
+        return 'ERROR'
+
+    body = request.get_json()
+
+    mac_adress = body['mac_adress']
+
     return "OK"
 
-@app.route('/api/v1.0/status',methods=['GET'])
-def get_status():
-    print("get server status...")
 
-    status = {
-        "status": "OK",
-        "timestamp": int(time.time()),
-        "api_links": {
-            "humidities": request.host_url + "api/v1.0/humidities",
-            "temperatures": request.host_url + "api/v1.0/temperatures",
-            "stations": request.host_url + "api/v1.0/stations"
-        }
-    }
-
-    return json.dumps(status)
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0')
-
-
