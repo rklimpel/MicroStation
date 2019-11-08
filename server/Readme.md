@@ -71,4 +71,17 @@ server should be available now on pi's ip and port 5000
 ### Tell me more about the Microstation API!
 
 
-blubb!
+So here is how to upload a new temperature value:
+
+`POST` to `<host>/api/v1.0/temperatures`
+
+Body should look something like this:
+```json
+{
+  "value":30.4,
+  "station_id":0,
+  "unit": "C",
+  "sensor": "HT65XY",
+  "timestamp": 6547582342
+}
+```
