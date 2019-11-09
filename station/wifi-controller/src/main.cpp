@@ -94,6 +94,7 @@ void establishConnection(String newssid, String newpassword){
         i++;
         if(i > 20){
             runSetupHandler();
+            break;
         }
     }
 
