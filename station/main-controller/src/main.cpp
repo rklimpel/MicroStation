@@ -6,8 +6,10 @@
 #define THERMISTOR_UPDATE_FREQUENZ 1500
 #define WIFI_UPDATE_FREQUENZ 10000
 
-#define WIFI_SSID "Zum Einhornland"
-#define WIFI_PW "Butterbreadcoffee23"
+//#define WIFI_SSID "Zum Einhornland"
+//#define WIFI_PW "Butterbreadcoffee23"
+#define WIFI_SSID "KabelBox-89F4"
+#define WIFI_PW "39499327547949706742"
 
 float readThermistor();
 void doStuff();
@@ -23,7 +25,7 @@ NetworkController networkController(6,7,WIFI_SSID,WIFI_PW);
 
 void setup() {
   networkController.establishConnection(WIFI_SSID,WIFI_PW);
-  Serial.begin(115200);
+  Serial.begin(9600);
   Serial.println("setup done.");
 }
 
@@ -31,15 +33,15 @@ void loop() {
 
   if(millis()-lastUpdate>THERMISTOR_UPDATE_FREQUENZ){
     text = (String)readThermistor();
-    networkController.uploadTemperature(text+"°C");
+    networkController.uploadTemperature(text);
     lastUpdate = millis();
   }
 
-  if(millis()-lastWifiUpdate>WIFI_UPDATE_FREQUENZ){
+  /*if(millis()-lastWifiUpdate>WIFI_UPDATE_FREQUENZ){
     Serial.println("Testing Connection...");
     networkController.testConnection();
     lastWifiUpdate = millis();
-  }
+  }*/
 
   analogDisplay.printAnalogText(text);
 }

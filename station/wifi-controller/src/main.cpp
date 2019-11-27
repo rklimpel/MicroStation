@@ -5,7 +5,6 @@
 
 #include <SerialCommandHandler.h>
 
-
 #define SERIAL_BOUND_RATE 9600
 
 void runSetupHandler();
@@ -51,7 +50,6 @@ void runSetupHandler(){
 }
 
 void indexHandler(){
-    //char content[] = "<form align=\"center\" action=\"/start\" method=\"POST\"><input type=\"submit\" value=\"Start Microstation\"></form>";
     char content[] = 
     "<form algin=\"center\" action=\"start\" method=\"get\">"
     "wifi-ssid: <input type=\"text\" name=\"ssid\"><br>"
@@ -68,7 +66,6 @@ void startHandler(){
         return;
     }
 
-    
     server.send(200,"text/plain","Try to connect to '" + server.arg("ssid") + "'.\nIf connection fails this wifi will be up again in 30 sec.");
     delay(3);
     server.stop();

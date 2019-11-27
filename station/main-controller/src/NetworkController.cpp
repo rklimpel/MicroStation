@@ -4,6 +4,7 @@
 #include <SoftwareSerial.h>
 
 #define SERIAL_BOUND_RATE 9600
+String const SERVER_ADRESS="http://192.168.0.16:5000";
 
 NetworkController::NetworkController(int pinRx, int pinTx, String ssid, String pw){
     PIN_RX = pinRx;
@@ -25,7 +26,15 @@ void NetworkController::testConnection(){
 }
 
 void NetworkController::uploadTemperature(String temp){
-    String msg = "§HTTP-GET%URL=http://192.168.178.195:5000/api/temperature?value=" + temp + "§";
+    String body = "{"
+        "\"value\":"+String(temp)+","
+        "\"station_id\":0,"
+        "\"unit\": \"C\","
+        "\"sensor\": \"HT65XY\","
+        "\"timestamp\": 6547582342"
+    "}";
+    String msg = "§HTTP-POST%URL="+SERVER_ADRESS+"/api/v1.0/temperatures%BODY=" + body+ "§";
+
     sendSerialMessage(msg);
 }
 
@@ -34,13 +43,13 @@ void NetworkController::sendSerialMessage(String msg){
     SoftwareSerial wifiSerial(PIN_RX,PIN_TX);
     wifiSerial.begin(SERIAL_BOUND_RATE);
     wifiSerial.println(msg);
-    delay(1000);
+    /*delay(1000);
     String response = "reponse: ";
     while (wifiSerial.available()){
         response += wifiSerial.readString();
         delay(500);
     }
-    Serial.println(response);
+    Serial.println(response);*/
     
 }
 
