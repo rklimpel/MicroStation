@@ -4,6 +4,7 @@ import time
 from flask import Flask,escape,request, render_template
 from tinydb import TinyDB, Query
 from datetime import datetime
+import pytz
 
 app = Flask(__name__)
 
@@ -19,18 +20,39 @@ def index():
     return render_template('index.html', title=title, name=name)
 
 @app.route('/rawdata/<table>/<station_id>',methods=['GET'])
-def view_temperature(station_id,table):
+def view_rawdata(station_id,table):
     db = TinyDB('./appdata/station_' + str(station_id) + '.json', indent=4)
     data = db.table(table).all()
 
+    local_tz = pytz.timezone('Europe/Berlin')
+    utc_tz = pytz.timezone('utc')
+    print(local_tz)
     for d in data:
         dt = datetime.fromtimestamp(d['timestamp'])
+        dt = utc_tz.localize(dt)
+        dt = dt.astimezone(local_tz)
         d['time'] = dt.time()
         d['date'] = dt.date()
 
     data.reverse()
 
     return render_template('listview.html', data=data)
+
+@app.route('/charts')
+def view_charts():
+    db = TinyDB('./appdata/station_0.json', indent=4)
+    data = db.table('humidity').all()
+
+    legend = 'Monthly Data'
+    labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
+    values = [10, 9, 8, 7, 6, 4, 7, 8]
+    return render_template('chart.html', values=values, labels=labels, legend=legend)
+ 
+ 
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
 
 # ------------------------ API -------------------------------
 

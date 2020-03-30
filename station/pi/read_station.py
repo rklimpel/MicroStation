@@ -53,9 +53,9 @@ def sent_data(value,sensor,unit,data_type):
     requests.post(url, json = data_object)
 
 sent_data(humidity_am2302,"am2302","%","humidities")
-sent_data(temperature_am2302,"am2302","C","temperatures")
-
-
+sent_data(temperature_am2302,"am2302","°C","temperatures")
+sent_data(humidity_dht11,"dht11","%","humidities")
+sent_data(temperature_dht11,"dht11","°C","temperatures")
 
 GPIO.output(pin_led_yellow,False)
 GPIO.output(pin_led_green,True)
