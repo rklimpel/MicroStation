@@ -3,6 +3,7 @@ import json
 import time
 from flask import Flask,escape,request, render_template
 from tinydb import TinyDB, Query
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -21,6 +22,14 @@ def index():
 def view_temperature(station_id,table):
     db = TinyDB('./appdata/station_' + str(station_id) + '.json', indent=4)
     data = db.table(table).all()
+
+    for d in data:
+        dt = datetime.fromtimestamp(d['timestamp'])
+        d['time'] = dt.time()
+        d['date'] = dt.date()
+
+    data.reverse()
+
     return render_template('listview.html', data=data)
 
 # ------------------------ API -------------------------------

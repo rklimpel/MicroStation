@@ -1,9 +1,12 @@
 <html>
-    <head>
-        <title>{{ title }}</title>
-    </head>
-    <body>
-        <h1>Welcome to {{ title }} Index.</h1>
-        <h3>Hello, {{ name }}!</h3>
-    </body>
+{% include 'head.html' %}
+
+<head>
+    <title>{{ title }}</title>
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+</body>
+
 </html>

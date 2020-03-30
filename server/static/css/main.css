@@ -5,8 +5,42 @@ body {
 
 .card {
     transition-duration: 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.15);
 }
 
 .card:hover {
-    transform: scale(1.05,1.05)
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.20);
+    z-index: 1000;
+    position: relative;
+    transform: scale(1.2, 1.2)
+}
+
+.quadraticbox {
+    position: relative;
+    width: 300px;
+    display: block;
+    border: 1px solid black;
+}
+
+.square-box {
+    position: relative;
+    width: 50%;
+    overflow: hidden;
+    background: #4679BD;
+}
+
+.square-box:before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+
+.square-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    color: white;
+    text-align: center;
 }
