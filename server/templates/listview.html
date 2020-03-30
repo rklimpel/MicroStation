@@ -1,15 +1,32 @@
-<html>
-    <head>
-            <meta http-equiv="refresh" content="10">
-    </head>
-    <body>
-        <h1>Hi!</h1>
-        {% for entry in data %}
-        <hr>
-        <div>time  : {{ entry.timestamp }} </div>
-        <div>value : {{ entry.value }}</div>
-        <div>unit  : {{ entry.unit }}</div>
-        <div>sensor: {{ entry.sensor }}</div>
-        {% endfor %}
-    </body>
-</html>
+{% extends "bootstrap/base.html" %}
+{% block title %}This is an example page{% endblock %}
+
+{% block head %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block content %}
+<body>
+    <div class="page-content">
+        <div class="list-group d-flex p-2" style>
+            {% for entry in data %}
+            <div class="list-group-item">
+                <div class="time">16:30Uhr 25.03.2020</div>
+                <div>
+                    <div class="time">time  : {{ entry.timestamp }} </div>
+                    <div>value : {{ entry.value }}</div>
+                    <div>unit  : {{ entry.unit }}</div>
+                    <div>sensor: {{ entry.sensor }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <footer id="sticky-footer" class="py-4 bg-dark">
+        <div class="container">
+            <p class="text-white text-center">MicroStation. Made by Rico Klimpel.</p>
+        </div>
+    </footer>
+</body>
+{%- endblock content %}

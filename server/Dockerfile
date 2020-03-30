@@ -7,6 +7,7 @@ RUN apt-get install -y libpython2.7-stdlib
 RUN pip3 install --upgrade pip
 
 RUN pip3 install flask
+RUN pip3 install flask-bootstrap4
 RUN pip3 install tinydb
 #RUN pip3 install json
 

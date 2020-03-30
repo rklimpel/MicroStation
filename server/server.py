@@ -2,9 +2,11 @@ import os
 import json
 import time
 from flask import Flask,escape,request, render_template
+from flask_bootstrap import Bootstrap
 from tinydb import TinyDB, Query
 
 app = Flask(__name__)
+Bootstrap(app)
 
 # --------------------- Webpages ----------------------------
 
