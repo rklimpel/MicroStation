@@ -49,13 +49,18 @@ def post_temperature():
     print(request)
 
     if not request.is_json:
+        print("ERROR: request body is not in json format")
         return 'ERROR'
+
+    print("Request data: " + str(request.data))
 
     body = request.get_json()
 
+    print(body)
+
     value = body['value']
     unit = body['unit']
-    timestamp = body['timestamp']
+    timestamp = time.time()
     station_id = body['station_id']
     sensor = body['sensor']
 

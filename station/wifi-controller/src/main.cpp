@@ -18,18 +18,30 @@ String getArgument(String argId,String cmd);
 String sendPOSTRequest(String url, String body);
 String sendGETRequest(String url);
 
+String serverip;
+String wifi_ssid;
+String wifi_pw;
+boolean connection_established;
+
 ESP8266WebServer server(80);
 
 void setup () {
     Serial.begin(SERIAL_BOUND_RATE);
-    runSetupHandler();
+    connection_established = false;
+    //runSetupHandler();
+    establishConnection("Zum Einhornland","Butterbreadcoffee23");
 }
  
 void loop() {
     server.handleClient();
     if(Serial.available()){
        String cmd = Serial.readString();
-       SerialCommandHandler().executeCommand(cmd);
+       if(connection_established){
+            SerialCommandHandler().executeCommand(cmd);
+       }else{
+           Serial.println("Do nothing because connection is not established.");
+       }
+       
     }
 }
 
@@ -54,28 +66,33 @@ void indexHandler(){
     "<form algin=\"center\" action=\"start\" method=\"get\">"
     "wifi-ssid: <input type=\"text\" name=\"ssid\"><br>"
     "wifi-pw: <input type=\"text\" name=\"pw\"><br>"
+    "server-ip: <input type=\"text\" name=\"server-ip\"><br>"
     "<input type=\"submit\" value=\"connect and start station\"></form>";
 
     server.send(200, "text/html",content);
 }
 
 void startHandler(){
-    if( ! server.hasArg("ssid") || ! server.hasArg("pw") 
-        || server.arg("ssid") == NULL || server.arg("pw") == NULL) {
+    if( ! server.hasArg("ssid") || ! server.hasArg("pw") || ! server.hasArg("server-ip")
+        || server.arg("ssid") == NULL || server.arg("pw") == NULL || server.arg("server-ip") == NULL) {
         server.send(400, "text/plain", "400: Invalid Request");
         return;
     }
 
-    server.send(200,"text/plain","Try to connect to '" + server.arg("ssid") + "'.\nIf connection fails this wifi will be up again in 30 sec.");
+    serverip = server.arg("server-ip");
+    wifi_ssid = server.arg("ssid");
+    wifi_pw = server.arg("pw");
+
+    server.send(200,"text/plain","Try to connect to '" + wifi_ssid + "'.\nIf connection fails this wifi will be up again in 30 sec.");
     delay(3);
     server.stop();
     server.close();
-    establishConnection(server.arg("ssid"),server.arg("pw"));
+    establishConnection(wifi_ssid,wifi_pw);
 
 }
 
-void establishConnection(String newssid, String newpassword){
-    Serial.println("Connect to '"+newssid+"' with pw '"+newpassword+"'");
+void establishConnection(String newssid, String newpassword){ 
+    Serial.println("Connect to '" + newssid + "' with pw '" + newpassword + "'");
 
     WiFi.mode(WIFI_STA);
     WiFi.begin(newssid, newpassword);
@@ -84,15 +101,22 @@ void establishConnection(String newssid, String newpassword){
     Serial.print(newssid); 
     Serial.println(" ...");
 
-    int i = 0;
+    int i = 1;
+    boolean failed = false;
+    Serial.println(WiFi.status());
     while (WiFi.status() != WL_CONNECTED) {
-        delay(1000);
-        Serial.print(++i); Serial.print(' ');
-        i++;
-        if(i > 20){
-            runSetupHandler();
+        delay(5000);
+        i+=5;
+        if(i > 60){
+            //runSetupHandler();
+            failed = true;
             break;
         }
+    }
+
+    if(failed){
+          Serial.println("Establishing Connection Failed");
+        return;
     }
 
     Serial.println('\n');
@@ -100,4 +124,5 @@ void establishConnection(String newssid, String newpassword){
     Serial.print("IP address:\t");
     Serial.println(WiFi.SSID());
     Serial.println(WiFi.localIP()); 
+    connection_established = true;
 }
