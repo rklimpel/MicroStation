@@ -25,7 +25,6 @@ def view_temperature(station_id,table):
 
 # ------------------------ API -------------------------------
 
-
 @app.route('/api/v1.0/status',methods=['GET'])
 def get_status():
     print("get server status...")
@@ -42,25 +41,18 @@ def get_status():
 
     return json.dumps(status)
 
-@app.route('/api/v1.0/temperatures',methods=['POST'])
-def post_temperature():
-    print("uploading temperature...")
+# ===== API:POST
 
-    print(request)
-
+def upload_value(request,table):
     if not request.is_json:
         print("ERROR: request body is not in json format")
         return 'ERROR'
-
     print("Request data: " + str(request.data))
-
     body = request.get_json()
-
-    print(body)
 
     value = body['value']
     unit = body['unit']
-    timestamp = time.time()
+    timestamp = body['timestamp']
     station_id = body['station_id']
     sensor = body['sensor']
 
@@ -68,7 +60,7 @@ def post_temperature():
         os.makedirs('./appdata/')
 
     db = TinyDB('./appdata/station_'+str(station_id)+'.json', indent=4)
-    table = db.table('temperature')
+    table = db.table(table)
     table.insert({
         'timestamp': timestamp, 
         'value': value,
@@ -76,11 +68,23 @@ def post_temperature():
         'sensor': sensor
         })
 
-    print("Saved Temperature to database.")
+    print("Saved to database.")
 
     db.close()
 
+@app.route('/api/v1.0/temperatures',methods=['POST'])
+def post_temperature():
+    print("uploading temperature...")
+    upload_value(request,"temperature")
     return "OK"
+
+@app.route('/api/v1.0/humidities',methods=['POST'])
+def post_humidity():
+    print("uploading humidty...")
+    upload_value(request,"humidity")
+    return "OK"
+
+# ===== API:GET
 
 @app.route('/api/v1.0/temperatures',methods=['GET'])
 def get_all_temperatures():
@@ -90,11 +94,6 @@ def get_all_temperatures():
 @app.route('/api/v1.0/temperatures/<int:station_id>',methods=['GET'])
 def get_station_temperature(station_id):
     print("get all temperatures form server " + station_id + "...")
-    return "OK"
-
-@app.route('/api/v1.0/humidities',methods=['POST'])
-def post_humidity():
-    print("uploading humidty...")
     return "OK"
 
 @app.route('/api/v1.0/humidities',methods=['GET'])
