@@ -1,4 +1,17 @@
 <html>
+<script>
+var values_list = [{% for item in humidity_values %} 
+                    {{ item }},
+            {% endfor %}
+        ]
+
+var labels_list = [{% for item in humidity_labels %}
+        "{{item}}",
+        {% endfor %}
+    ]
+</script>
+
+
 {% include 'head.html' %}
 
 <head>
@@ -7,7 +20,12 @@
 
 <body>
     {% include 'navbar.html' %}
-    
+    <h1>Simple Line Chart</h1>
+    <!-- bar chart canvas element -->
+    <canvas id="humidity_chart" width="800px" height="400"></canvas>
+    <canvas id="temperature_chart" width="800px" height="400"></canvas>
 </body>
+
+
 
 </html>

@@ -43,16 +43,27 @@ def view_charts():
     db = TinyDB('./appdata/station_0.json', indent=4)
     data = db.table('humidity').all()
 
-    legend = 'Monthly Data'
-    labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
-    values = [10, 9, 8, 7, 6, 4, 7, 8]
-    return render_template('chart.html', values=values, labels=labels, legend=legend)
- 
- 
-if __name__ == "__main__":
-    app.run(debug=True)
+    humidity_labels = []
+    humidity_values = []
+    for d in data:
+        if d['sensor'] == 'am2302':
+            humidity_labels.append(d['timestamp'])
+            humidity_values.append(d['value'])
 
+    humidity_legend = 'Humidity Data'
 
+    data = db.table('temperature').all()
+
+    temperature_labels = []
+    temperature_values = []
+    for d in data:
+        if d['sensor'] == 'am2302':
+            temperature_labels.append(d['timestamp'])
+            temperature_values.append(d['value'])
+
+    temperature_legend = 'Temperature Data'
+
+    return render_template('charts.html', humidity_values=humidity_values, humidity_labels=humidity_labels, humidity_legend=humidity_legend,temperature_values=temperature_values,temperature_labels=temperature_labels,temperature_legend=temperature_legend)
 
 # ------------------------ API -------------------------------
 
@@ -157,7 +168,5 @@ def register_station():
 
     return "OK"
 
-
-
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=False,use_evalex=False,host='0.0.0.0')
