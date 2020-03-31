@@ -32,5 +32,5 @@ Code for Arduino (Genuino) board in main-controller.
 ## About the Result
 
 Take a look on some of the screenshots:
-![dashboard](screenshot2.png)
-![raw data table](screenshot1.png)
+![dashboard](screenshots/screenshot2.png)
+![raw data table](screenshots/screenshot1.png)
