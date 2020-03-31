@@ -13,11 +13,37 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def index():
-    name = request.args.get("name","")
-    title = "Microstation Server"
-    if(name is ""):
-        name = "Unkown User"
-    return render_template('index.html', title=title, name=name)
+    db = TinyDB('./appdata/station_0.json', indent=4)
+    data = db.table('humidity').all()
+
+    humidity_labels = []
+    humidity_values = []
+    humidity_now = "0 %"
+    for d in data:
+        if d['sensor'] == 'am2302':
+            humidity_labels.append(d['timestamp'])
+            humidity_values.append(d['value'])
+            humidity_now = str(d['value']) + " %"
+
+    humidity_legend = 'Humidity Data'
+
+    data = db.table('temperature').all()
+
+    temperature_labels = []
+    temperature_values = []
+    temperature_now = "0 °C"
+    for d in data:
+        if d['sensor'] == 'am2302':
+            temperature_labels.append(d['timestamp'])
+            temperature_values.append(d['value'])
+            temperature_now = str(d['value']) + " °C"
+
+    temperature_legend = 'Temperature Data'
+
+    return render_template('index.html', 
+    humidity_values=humidity_values, humidity_labels=humidity_labels, humidity_legend=humidity_legend,
+    temperature_values=temperature_values,temperature_labels=temperature_labels,temperature_legend=temperature_legend,
+    temperature_now=temperature_now,humidity_now=humidity_now)
 
 @app.route('/rawdata/<table>/<station_id>',methods=['GET'])
 def view_rawdata(station_id,table):
@@ -63,7 +89,9 @@ def view_charts():
 
     temperature_legend = 'Temperature Data'
 
-    return render_template('charts.html', humidity_values=humidity_values, humidity_labels=humidity_labels, humidity_legend=humidity_legend,temperature_values=temperature_values,temperature_labels=temperature_labels,temperature_legend=temperature_legend)
+    return render_template('charts.html', 
+    humidity_values=humidity_values, humidity_labels=humidity_labels, humidity_legend=humidity_legend,
+    temperature_values=temperature_values,temperature_labels=temperature_labels,temperature_legend=temperature_legend)
 
 # ------------------------ API -------------------------------
 

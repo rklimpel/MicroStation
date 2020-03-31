@@ -1,12 +1,12 @@
 <html>
 <script>
-var values_list = [{% for item in humidity_values %} 
-                    {{ item }},
-            {% endfor %}
+    var values_list = [{% for item in humidity_values %}
+    {{ item }},
+    {% endfor %}
         ]
 
-var labels_list = [{% for item in humidity_labels %}
-        "{{item}}",
+    var labels_list = [{% for item in humidity_labels %}
+    "{{item}}",
         {% endfor %}
     ]
 </script>
@@ -20,12 +20,15 @@ var labels_list = [{% for item in humidity_labels %}
 
 <body>
     {% include 'navbar.html' %}
-    <h1>Simple Line Chart</h1>
-    <!-- bar chart canvas element -->
-    <canvas id="humidity_chart" width="800px" height="400"></canvas>
-    <canvas id="temperature_chart" width="800px" height="400"></canvas>
+    <div class="row d-flex justify-content-center m-5">
+        <div class="col-10">
+            <div class="container">
+                <div class="card shaddow">
+                    <canvas id="humidity_chart" width="800px" height="400" style="margin-left: -5px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-
-
 
 </html>

@@ -1,4 +1,27 @@
 <html>
+
+    <script>
+        var temperature_values_list = [{% for item in temperature_values %}
+        {{ item }},
+        {% endfor %}
+            ]
+    
+        var temperature_labels_list = [{% for item in temperature_labels %}
+        "{{item}}",
+            {% endfor %}
+        ]
+
+        var humidity_values_list = [{% for item in humidity_values %}
+        {{ item }},
+        {% endfor %}
+            ]
+    
+        var humidity_labels_list = [{% for item in humidity_labels %}
+        "{{item}}",
+            {% endfor %}
+        ]
+    </script>
+
 {% include 'head.html' %}
 
 <head>
@@ -7,6 +30,43 @@
 
 <body>
     {% include 'navbar.html' %}
+    <div class="row align-items-center h-100">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+            <div class="card w-100 shadow-lg">
+                <div class="row w-100 m-0">
+                    <div class="col-6 square-box bg-danger p-0">
+                        <div class="square-content p-3">
+                            <div class="circle">
+                                <div class="row align-items-center h-100 p-0">
+                                    <div class="text-center w-100"
+                                        style="font-size: 6vw;font-weight: 100;color: #fffffffc;">{{ temperature_now}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 square-box bg-info p-0">
+                        <div class="square-content p-3">
+                            <div class="circle">
+                                <div class="row align-items-center h-100 p-0">
+                                    <div class="text-center w-100"
+                                        style="font-size: 6vw;font-weight: 100;color: #fffffffc;">{{ humidity_now }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row w-100 m-0">
+                    <div class="col-6 bg-danger p-0">
+                        <canvas id="temperature_chart" class="pr-1"></canvas>
+                    </div>
+                    <div class="col-6 bg-info p-0">
+                        <canvas id="humidity_chart" class="pr-1"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </body>
 
 </html>
