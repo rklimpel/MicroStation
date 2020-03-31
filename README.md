@@ -28,3 +28,9 @@ Code for the raspberryp pi as station with sensors
 
 Code for the esp8266 chip in wifi-controller.
 Code for Arduino (Genuino) board in main-controller.
+
+## About the Result
+
+Take a look on some of the screenshots:
+![dashboard](screenshot2.png)
+![raw data table](screenshot1.png)
