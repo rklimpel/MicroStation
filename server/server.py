@@ -3,53 +3,13 @@ import json
 import time
 from flask import Flask,escape,request, render_template
 from tinydb import TinyDB, Query
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
 
 app = Flask(__name__)
 
-# --------------------- Webpages ----------------------------
-
-@app.route('/')
-@app.route('/index')
-def index():
-    db = TinyDB('./appdata/station_0.json', indent=4)
-    data = db.table('humidity').all()
-
-    humidity_labels = []
-    humidity_values = []
-    humidity_now = "0 %"
-    for d in data:
-        if d['sensor'] == 'am2302':
-            humidity_labels.append(d['timestamp'])
-            humidity_values.append(d['value'])
-            humidity_now = str(d['value']) + " %"
-
-    humidity_legend = 'Humidity Data'
-
-    data = db.table('temperature').all()
-
-    temperature_labels = []
-    temperature_values = []
-    temperature_now = "0 °C"
-    for d in data:
-        if d['sensor'] == 'am2302':
-            temperature_labels.append(d['timestamp'])
-            temperature_values.append(d['value'])
-            temperature_now = str(d['value']) + " °C"
-
-    temperature_legend = 'Temperature Data'
-
-    return render_template('index.html', 
-    humidity_values=humidity_values, humidity_labels=humidity_labels, humidity_legend=humidity_legend,
-    temperature_values=temperature_values,temperature_labels=temperature_labels,temperature_legend=temperature_legend,
-    temperature_now=temperature_now,humidity_now=humidity_now)
-
-@app.route('/rawdata/<table>/<station_id>',methods=['GET'])
-def view_rawdata(station_id,table):
-    db = TinyDB('./appdata/station_' + str(station_id) + '.json', indent=4)
-    data = db.table(table).all()
-
+def add_datetime_to_data(data_list):
+    data = data_list
     local_tz = pytz.timezone('Europe/Berlin')
     utc_tz = pytz.timezone('utc')
     print(local_tz)
@@ -61,6 +21,77 @@ def view_rawdata(station_id,table):
         d['date'] = dt.date()
 
     data.reverse()
+
+    return data
+
+def normalize_data(data_list):
+    pass
+    
+
+def reduce_data_to_last_hours(data,hours):
+    last_hours_date_time = datetime.now() - timedelta(hours = hours)
+    result = []
+    for d in data:
+        dt = datetime.fromtimestamp(d['timestamp'])
+        if last_hours_date_time < dt:
+            result.append(d)
+
+    return result
+
+# --------------------- Webpages ----------------------------
+
+@app.route('/')
+@app.route('/index')
+def index():
+    db = TinyDB('./appdata/station_0.json', indent=4)
+    data = db.table('humidity').all()
+
+    data = add_datetime_to_data(data)
+    data = reduce_data_to_last_hours(data,5)
+    data.reverse()
+    humidity_labels = []
+    humidity_values = []
+    humidity_now = "0 %"
+    last_updated_humidity = "?"
+    for d in data:
+        if d['sensor'] == 'am2302':
+            humidity_labels.append(str(d['date']) + " - " + str(d['time']))
+            humidity_values.append(d['value'])
+            humidity_now = str(d['value']) + " %"
+            last_updated_humidity = "last updated " + str(d['date']) + "  " + str(d['time'])
+
+    humidity_legend = 'Humidity Data'
+
+    data = db.table('temperature').all()
+
+    data = add_datetime_to_data(data)
+    data = reduce_data_to_last_hours(data,5)
+    data.reverse()
+    temperature_labels = []
+    temperature_values = []
+    temperature_now = "0 °C"
+    last_updated_temperature = "?"
+    for d in data:
+        if d['sensor'] == 'am2302':
+            temperature_labels.append(str(d['date']) + " - " + str(d['time']))
+            temperature_values.append(d['value'])
+            temperature_now = str(d['value']) + " °C"
+            last_updated_temperature = "last updated " + str(d['date']) + "  " + str(d['time'])
+
+    temperature_legend = 'Temperature Data'
+
+    return render_template('index.html', 
+    humidity_values=humidity_values, humidity_labels=humidity_labels, humidity_legend=humidity_legend,
+    temperature_values=temperature_values,temperature_labels=temperature_labels,temperature_legend=temperature_legend,
+    temperature_now=temperature_now,last_updated_temperature=last_updated_temperature,
+    humidity_now=humidity_now,last_updated_humidity=last_updated_humidity)
+
+@app.route('/rawdata/<table>/<station_id>',methods=['GET'])
+def view_rawdata(station_id,table):
+    db = TinyDB('./appdata/station_' + str(station_id) + '.json', indent=4)
+    data = db.table(table).all()
+
+    data = add_datetime_to_data(data)
 
     return render_template('listview.html', data=data)
 

@@ -31,7 +31,7 @@
 <body>
     {% include 'navbar.html' %}
     <div class="row align-items-center h-100">
-        <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto pr-0 pl-0">
             <div class="card w-100 shadow-lg">
                 <div class="row w-100 m-0">
                     <div class="col-6 square-box bg-danger p-0">
@@ -61,6 +61,14 @@
                     </div>
                     <div class="col-6 bg-info p-0">
                         <canvas id="humidity_chart" class="pr-1"></canvas>
+                    </div>
+                </div>
+                <div class="row w-100 m-0">
+                    <div class="col-6 bg-danger p-0">
+                        <div class="text-center p-3" style="font-size: 12px; font-weight: 100; color: #FFFFFF99">{{ last_updated_temperature }}</div>
+                    </div>
+                    <div class="col-6 bg-info p-0">
+                        <div class="text-center p-3" style="font-size: 12px; font-weight: 100; color: #FFFFFF99">{{ last_updated_humidity }}</div>
                     </div>
                 </div>
             </div>

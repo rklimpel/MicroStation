@@ -4,7 +4,7 @@ window.onload = function() {
         labels: humidity_labels_list,
         datasets: [{
             fill: false,
-            lineTension: 0.5,
+            lineTension: 0.7,
             backgroundColor: "rgba(0,0,0,0.0)",
             borderColor: "rgba(256,256,256,1)",
             borderCapStyle: 'round',
@@ -29,7 +29,7 @@ window.onload = function() {
         labels: temperature_labels_list,
         datasets: [{
             fill: false,
-            lineTension: 0.5,
+            lineTension: 0.7,
             backgroundColor: "rgba(0,0,0,0.0)",
             borderColor: "rgba(256,256,256,1)",
             borderCapStyle: 'round',
@@ -85,7 +85,7 @@ window.onload = function() {
             enabled: false
         },
         animation: {
-            duration: 4000,
+            duration: 6000,
         }
         
     }
